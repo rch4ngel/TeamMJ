@@ -28,15 +28,15 @@ import Button from "./components/CustomButtons/Button.jsx";
 class App extends Component {
     state = {
         dcards: [
-            {animal: "Cat", animalImg: CatImg, sndAnimal: {CatSnd}},
-            {animal: "Dog", animalImg: DogImg, sndAnimal: {DogSnd}},
-            {animal: "Bird", animalImg: BirdImg, sndAnimal: {BirdSnd}},
-            {animal: "Cow", animalImg: CowImg, sndAnimal: {CowSnd}},
-            {animal: "Elephant", animalImg: ElephantImg, sndAnimal: {ElephantSnd}},
-            {animal: "Frog", animalImg: FrogImg, sndAnimal: {FrogSnd}},
-            {animal: "Goat", animalImg: GoatImg, sndAnimal: {GoatSnd}},
-            {animal: "Horse", animalImg: HorseImg, sndAnimal: {HorseSnd}},
-            {animal: "Rooster", animalImg: RoosterImg, sndAnimal: {RoosterSnd}},
+            {animal: "Cat", animalImg: CatImg, animalSnd: {CatSnd}},
+            {animal: "Dog", animalImg: DogImg, animalSnd: {DogSnd}},
+            {animal: "Bird", animalImg: BirdImg, animalSnd: {BirdSnd}},
+            {animal: "Cow", animalImg: CowImg, animalSnd: {CowSnd}},
+            {animal: "Elephant", animalImg: ElephantImg, animalSnd: {ElephantSnd}},
+            {animal: "Frog", animalImg: FrogImg, animalSnd: {FrogSnd}},
+            {animal: "Goat", animalImg: GoatImg, animalSnd: {GoatSnd}},
+            {animal: "Horse", animalImg: HorseImg, animalSnd: {HorseSnd}},
+            {animal: "Rooster", animalImg: RoosterImg, animalSnd: {RoosterSnd}},
         ],
         showDCards: false
     };
