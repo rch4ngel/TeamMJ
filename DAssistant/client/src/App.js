@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
-import Card from './components/Card/Card'
-import Button from './components/CustomButtons/Button'
+import DCard from './DCard/DCard'
 
 class App extends Component {
     render() {
         return (
             <div className="App">
-                <Card/>
-                <Button/>
+                <DCard/>
             </div>
         );
     }
