@@ -2,15 +2,13 @@ import React from "react";
 // material-ui components
 import withStyles from "@material-ui/core/styles/withStyles";
 // core components
-import Card from "../components/Card/Card.jsx";
-import CardBody from "../components/Card/CardBody.jsx";
-import Button from "../components/CustomButtons/Button.jsx";
+import Card from "../Card/Card.jsx";
+import CardBody from "../Card/CardBody.jsx";
+import Button from "../CustomButtons/Button.jsx";
 
-import CatImg from "../assets/img/animals/cat.png";
+import imagesStyles from "../../assets/jss/material-kit-react/imagesStyles.jsx";
 
-import imagesStyles from "../assets/jss/material-kit-react/imagesStyles.jsx";
-
-import { cardTitle } from "../assets/jss/material-kit-react.jsx";
+import { cardTitle } from "../../assets/jss/material-kit-react.jsx";
 
 const style = {
     ...imagesStyles,
@@ -25,13 +23,12 @@ class Cards extends React.Component {
                 <img
                     style={{height: "180px", width: "100%", display: "block"}}
                     className={classes.imgCardTop}
-                    src= {CatImg}
+                    src={this.props.animalImg}
                     alt="Card-img-cap"
                 />
                 <CardBody>
-                    <h4 className={classes.cardTitle}>Card title</h4>
-                    <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <Button color="primary">Do something</Button>
+                    <h4 className={classes.cardTitle}>{this.props.animal}</h4>
+                    <Button color="primary">Select</Button>
                 </CardBody>
             </Card>
         );
