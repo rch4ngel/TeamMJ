@@ -22,12 +22,11 @@ import GoatSnd from './assets/snd/goat.mp3'
 import HorseSnd from './assets/snd/horse.mp3'
 import RoosterSnd from './assets/snd/rooster.mp3'
 
-import Button from "./components/CustomButtons/Button.jsx";
-
+import Button from './components/CustomButtons/Button.jsx';
 
 class App extends Component {
     state = {
-        dcards: [
+        dCards: [
             {animal: "Cat", animalImg: CatImg, animalSnd: {CatSnd}},
             {animal: "Dog", animalImg: DogImg, animalSnd: {DogSnd}},
             {animal: "Bird", animalImg: BirdImg, animalSnd: {BirdSnd}},
@@ -41,21 +40,29 @@ class App extends Component {
         showDCards: false
     };
 
-    handleClick = () => {
+    toggleCardsHandler = () => {
         this.setState({showDCards: true})
     };
 
     render() {
-        if(this.state.showDCards) {
-            return (
-                <div className="App">
-                    <DCard animal={this.state.dcards[0].animal} animalImg={this.state.dcards[0].animalImg}/>
+        let dCards = null;
+        if(this.state.showDCards === true) {
+            dCards = (
+                <div>
+                    {this.state.dCards.map((dCard, index) => {
+                       return <DCard
+                           animal={dCard.animal}
+                           animalImg={dCard.animalImg}
+                           key={dCard.animal}
+                       />
+                    })}
                 </div>
-            );
+            )
         }
         return (
             <div className="App">
-                <Button onClick={this.handleClick}>Start Game</Button>
+                <Button onClick={this.toggleCardsHandler}>Start Game</Button>
+                {dCards}
             </div>
         );
     }

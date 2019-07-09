@@ -27,8 +27,7 @@ class Cards extends React.Component {
                     alt="Card-img-cap"
                 />
                 <CardBody>
-                    <h4 className={classes.cardTitle}>{this.props.animal}</h4>
-                    <Button color="primary">Select</Button>
+                    <Button color="primary">{this.props.animal}</Button>
                 </CardBody>
             </Card>
         );
