@@ -1,4 +1,4 @@
-// Author: Mitzi Cubedo
+// Author: Mitzi Cubedo, John Nielsen
 // Description: Web Server for Pepper Animal Game.
 package main
 
