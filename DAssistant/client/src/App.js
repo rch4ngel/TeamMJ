@@ -22,7 +22,8 @@ import GoatSnd from './assets/snd/goat.mp3'
 import HorseSnd from './assets/snd/horse.mp3'
 import RoosterSnd from './assets/snd/rooster.mp3'
 
-import Button from "./components/CustomButtons/Button.jsx";
+import Button from './components/CustomButtons/Button.jsx'
+import DNavTab from './components/DNavTab/DNavTab.jsx';
 
 
 class App extends Component {
@@ -55,6 +56,7 @@ class App extends Component {
         }
         return (
             <div className="App">
+                <DNavTab navtab/>
                 <Button onClick={this.handleClick}>Start Game</Button>
             </div>
         );
