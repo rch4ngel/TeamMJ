@@ -10,6 +10,7 @@ import imagesStyles from "../../assets/jss/material-kit-react/imagesStyles.jsx";
 
 import { cardTitle } from "../../assets/jss/material-kit-react.jsx";
 
+
 const style = {
     ...imagesStyles,
     cardTitle,
@@ -19,9 +20,9 @@ class Cards extends React.Component {
     render() {
         const { classes } = this.props;
         return (
-            <Card style={{width: "20rem"}}>
+            <Card style={{width: "20rem", margin: "20px", display: "flex"}}>
                 <img
-                    style={{height: "180px", width: "100%", display: "block"}}
+                    style={{height: "160px", width: "100%", display: "block"}}
                     className={classes.imgCardTop}
                     src={this.props.animalImg}
                     alt="Card-img-cap"
