@@ -73,7 +73,10 @@ class App extends Component {
                 animalSnd: {RoosterSnd}
             },
         ],
-        showDCards: false
+        showDCards: false,
+        dAnswer: 0,
+        dStartCardIndex: 0,
+        dEndCardIndex: 3
     };
 
     toggleCardsHandler = () => {
@@ -83,7 +86,6 @@ class App extends Component {
 
     randomCardsHandler = () => {
         const dCards = [...this.state.dCards];
-        console.log(dCards);
 
         let dTempCard;
         let dCardIndex;
@@ -94,13 +96,34 @@ class App extends Component {
             dSize--;
             dTempCard = dCards[dSize];
             let dCard = dCards[dCardIndex];
-            console.log(dCard);
             dCards[dSize] = dCard;
             dCards[dCardIndex] = dTempCard;
         }
 
         this.setState({dCards: dCards});
-        console.log(dCards);
+    };
+
+    toggleNextCardsHandler = () => {
+        let dStartCardIndex = this.state.dStartCardIndex;
+        let dEndCardIndex = this.state.dEndCardIndex;
+        let dRandomindex = Math.floor(Math.random() * 3);
+        let dCards = [...this.state.dCards];
+
+        console.log("The Answer is: " + dCards[dRandomindex]);
+        this.setState({dAnswer: dRandomindex});
+        dCards.splice(dRandomindex, 1);
+        console.log("DCards now consist of: " + dCards);
+        this.setState({dCards: dCards});
+
+        dStartCardIndex += 1;
+        dEndCardIndex += 1;
+
+        if(dEndCardIndex > 9)
+            return;
+
+        this.setState({dStartCardIndex: dStartCardIndex});
+        this.setState({dEndCardIndex: dEndCardIndex});
+        console.log(this.state.dStartCardIndex, this.state.dEndCardIndex)
     };
 
     render() {
@@ -108,7 +131,7 @@ class App extends Component {
         if(this.state.showDCards === true) {
             dCards = (
                 <div className="Animals">
-                    {this.state.dCards.map((dCard) => {
+                    {this.state.dCards.slice(this.state.dStartCardIndex,this.state.dEndCardIndex).map((dCard) => {
                        return <DCard
                            animal={dCard.animal}
                            animalImg={dCard.animalImg}
