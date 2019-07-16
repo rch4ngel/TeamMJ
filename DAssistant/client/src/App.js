@@ -79,51 +79,53 @@ class App extends Component {
         dEndCardIndex: 3
     };
 
-    toggleCardsHandler = () => {
+    toggleDCardsHandler = () => {
         this.setState({showDCards: true});
-        this.randomCardsHandler();
+        this.randomDCardsHandler();
+        this.setDAnswer();
     };
 
-    randomCardsHandler = () => {
-        const dCards = [...this.state.dCards];
+    randomDCardsHandler = () => {
+        let dCardsCopy = [...this.state.dCards];
 
         let dTempCard;
         let dCardIndex;
-        let dSize = dCards.length;
+        let dSize = dCardsCopy.length;
 
         while (dSize > 0) {
             dCardIndex = Math.floor(Math.random() * dSize);
             dSize--;
-            dTempCard = dCards[dSize];
-            let dCard = dCards[dCardIndex];
-            dCards[dSize] = dCard;
-            dCards[dCardIndex] = dTempCard;
+            dTempCard = dCardsCopy[dSize];
+            let dCard = dCardsCopy[dCardIndex];
+            dCardsCopy[dSize] = dCard;
+            dCardsCopy[dCardIndex] = dTempCard;
         }
 
-        this.setState({dCards: dCards});
+        this.setState({dCards: dCardsCopy}, () => {console.log(this.state.dCards)});
     };
 
-    toggleNextCardsHandler = () => {
-        let dStartCardIndex = this.state.dStartCardIndex;
-        let dEndCardIndex = this.state.dEndCardIndex;
-        let dRandomindex = Math.floor(Math.random() * 3);
-        let dCards = [...this.state.dCards];
+    setDAnswer = () => {
+        let dRandomIndex = Math.floor(Math.random() * 3);
 
-        console.log("The Answer is: " + dCards[dRandomindex]);
-        this.setState({dAnswer: dRandomindex});
-        dCards.splice(dRandomindex, 1);
-        console.log("DCards now consist of: " + dCards);
-        this.setState({dCards: dCards});
+        this.setState({dAnswer: dRandomIndex}, () => {
+            console.log("dAnswer is :", this.state.dAnswer);
+        });
 
-        dStartCardIndex += 1;
-        dEndCardIndex += 1;
+    };
 
-        if(dEndCardIndex > 9)
-            return;
+    toggleDNextCardsHandler = () => {
+        const dCardsCopy = [...this.state.dCards];
+        dCardsCopy.splice(this.state.dAnswer, 1);
 
-        this.setState({dStartCardIndex: dStartCardIndex});
-        this.setState({dEndCardIndex: dEndCardIndex});
-        console.log(this.state.dStartCardIndex, this.state.dEndCardIndex)
+        this.setDAnswer();
+
+        if (dCardsCopy.length <= 3){
+            dCardsCopy.splice(0, dCardsCopy.length)
+        }
+
+        this.setState({dCards: dCardsCopy});
+
+        console.log(this.state.dCards)
     };
 
     render() {
@@ -143,9 +145,9 @@ class App extends Component {
         }
         return (
             <div className="App">
-                <Button onClick={this.toggleCardsHandler}>Start Game</Button>
+                <Button onClick={this.toggleDCardsHandler}>Start Game</Button>
                 { dCards }
-                <Button onClick={this.toggleNextCardsHandler}>Next</Button>
+                <Button onClick={this.toggleDNextCardsHandler}>Next</Button>
             </div>
         );
     }
