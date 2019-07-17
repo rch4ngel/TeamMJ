@@ -24,62 +24,75 @@ import RoosterSnd   from './assets/snd/rooster.mp3'
 
 import Button       from './components/CustomButtons/Button.jsx';
 
+const dAnimalList = [
+    {
+        animal: "Cat",
+        animalImg: CatImg,
+        animalSnd: {CatSnd}
+    },
+    {
+        animal: "Dog",
+        animalImg: DogImg,
+        animalSnd: {DogSnd}
+    },
+    {
+        animal: "Bird",
+        animalImg: BirdImg,
+        animalSnd: {BirdSnd}
+    },
+    {
+        animal: "Cow",
+        animalImg: CowImg,
+        animalSnd: {CowSnd}
+    },
+    {
+        animal: "Elephant",
+        animalImg: ElephantImg,
+        animalSnd: {ElephantSnd}
+    },
+    {
+        animal: "Frog",
+        animalImg: FrogImg,
+        animalSnd: {FrogSnd}
+    },
+    {
+        animal: "Goat",
+        animalImg: GoatImg,
+        animalSnd: {GoatSnd}
+    },
+    {
+        animal: "Horse",
+        animalImg: HorseImg,
+        animalSnd: {HorseSnd}
+    },
+    {
+        animal: "Rooster",
+        animalImg: RoosterImg,
+        animalSnd: {RoosterSnd}
+    }
+];
+
 class App extends Component {
     state = {
-        dCards: [
-            {
-                animal: "Cat",
-                animalImg: CatImg,
-                animalSnd: {CatSnd}
-            },
-            {
-                animal: "Dog",
-                animalImg: DogImg,
-                animalSnd: {DogSnd}
-            },
-            {
-                animal: "Bird",
-                animalImg: BirdImg,
-                animalSnd: {BirdSnd}
-            },
-            {
-                animal: "Cow",
-                animalImg: CowImg,
-                animalSnd: {CowSnd}
-            },
-            {
-                animal: "Elephant",
-                animalImg: ElephantImg,
-                animalSnd: {ElephantSnd}
-            },
-            {
-                animal: "Frog",
-                animalImg: FrogImg,
-                animalSnd: {FrogSnd}
-            },
-            {
-                animal: "Goat",
-                animalImg: GoatImg,
-                animalSnd: {GoatSnd}
-            },
-            {
-                animal: "Horse",
-                animalImg: HorseImg,
-                animalSnd: {HorseSnd}
-            },
-            {
-                animal: "Rooster",
-                animalImg: RoosterImg,
-                animalSnd: {RoosterSnd}
-            },
-        ],
+        dCards: dAnimalList,
         showDCards: false,
         dAnswer: 0,
         dStartCardIndex: 0,
-        dEndCardIndex: 3
+        dEndCardIndex: 3,
+        dScore: 0,
+    };
+
+    populateDCards = () => {
+        this.setState((state) => ({
+            dCards: [...state.dCards, ...dAnimalList]
+        }));
     };
 
     toggleDCardsHandler = () => {
+        if (this.state.dCards.length === 0) {
+            console.log("Populating the cards");
+            this.populateDCards()
+        }
         this.setState({showDCards: true});
         this.randomDCardsHandler();
         this.setDAnswer();
@@ -88,6 +101,7 @@ class App extends Component {
     randomDCardsHandler = () => {
         let dCardsCopy = [...this.state.dCards];
 
+        console.log("Randomizing the cards: ", dCardsCopy);
         let dTempCard;
         let dCardIndex;
         let dSize = dCardsCopy.length;
@@ -120,7 +134,8 @@ class App extends Component {
         this.setDAnswer();
 
         if (dCardsCopy.length <= 3){
-            dCardsCopy.splice(0, dCardsCopy.length)
+            dCardsCopy.splice(0, dCardsCopy.length);
+            this.setState({showDCards: false})
         }
 
         this.setState({dCards: dCardsCopy});
@@ -130,6 +145,9 @@ class App extends Component {
 
     render() {
         let dCards = null;
+        let dNextButton = null;
+        let dStartButton = null;
+
         if(this.state.showDCards === true) {
             dCards = (
                 <div className="Animals">
@@ -141,13 +159,20 @@ class App extends Component {
                        />
                     })}
                 </div>
+            );
+            dNextButton = (
+                <Button onClick={this.toggleDNextCardsHandler}>Next</Button>
+            )
+        } else {
+            dStartButton = (
+                <Button onClick={this.toggleDCardsHandler}>Start Game</Button>
             )
         }
         return (
             <div className="App">
-                <Button onClick={this.toggleDCardsHandler}>Start Game</Button>
+                { dStartButton }
                 { dCards }
-                <Button onClick={this.toggleDNextCardsHandler}>Next</Button>
+                { dNextButton}
             </div>
         );
     }
