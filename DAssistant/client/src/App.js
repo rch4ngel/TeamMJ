@@ -24,7 +24,7 @@ import RoosterSnd   from './assets/snd/rooster.mp3'
 
 import Button       from './components/CustomButtons/Button.jsx';
 
-const dAnimalList = [
+const dCards = [
     {
         animal: "Cat",
         animalImg: CatImg,
@@ -74,7 +74,7 @@ const dAnimalList = [
 
 class App extends Component {
     state = {
-        dCards: dAnimalList,
+        dCards,
         showDCards: false,
         dAnswer: 0,
         dStartCardIndex: 0,
@@ -83,39 +83,36 @@ class App extends Component {
     };
 
     populateDCards = () => {
-        this.setState((state) => ({
-            dCards: [...state.dCards, ...dAnimalList]
-        }));
+        this.setState({dCards}, () => {
+            this.randomDCardsHandler();
+        });
+        this.setState({showDCards: true})
     };
 
     toggleDCardsHandler = () => {
-        if (this.state.dCards.length === 0) {
-            console.log("Populating the cards");
-            this.populateDCards()
-        }
         this.setState({showDCards: true});
         this.randomDCardsHandler();
-        this.setDAnswer();
+        // this.setDAnswer();
     };
 
     randomDCardsHandler = () => {
-        let dCardsCopy = [...this.state.dCards];
+        const dCards = [...this.state.dCards];
 
-        console.log("Randomizing the cards: ", dCardsCopy);
+        console.log("Randomizing the cards: ", dCards);
         let dTempCard;
         let dCardIndex;
-        let dSize = dCardsCopy.length;
+        let dSize = dCards.length;
 
         while (dSize > 0) {
             dCardIndex = Math.floor(Math.random() * dSize);
             dSize--;
-            dTempCard = dCardsCopy[dSize];
-            let dCard = dCardsCopy[dCardIndex];
-            dCardsCopy[dSize] = dCard;
-            dCardsCopy[dCardIndex] = dTempCard;
+            dTempCard = dCards[dSize];
+            let dCard = dCards[dCardIndex];
+            dCards[dSize] = dCard;
+            dCards[dCardIndex] = dTempCard;
         }
 
-        this.setState({dCards: dCardsCopy}, () => {console.log(this.state.dCards)});
+        this.setState({dCards: dCards}, () => {console.log(this.state.dCards)});
     };
 
     setDAnswer = () => {
@@ -128,17 +125,17 @@ class App extends Component {
     };
 
     toggleDNextCardsHandler = () => {
-        const dCardsCopy = [...this.state.dCards];
-        dCardsCopy.splice(this.state.dAnswer, 1);
+        const dCards = [...this.state.dCards];
+        dCards.splice(this.state.dAnswer, 1);
 
         this.setDAnswer();
 
-        if (dCardsCopy.length <= 3){
-            dCardsCopy.splice(0, dCardsCopy.length);
+        if (dCards.length <= 3){
+            dCards.splice(0, dCards.length);
             this.setState({showDCards: false})
         }
 
-        this.setState({dCards: dCardsCopy});
+        this.setState({dCards: dCards});
 
         console.log(this.state.dCards)
     };
@@ -147,6 +144,7 @@ class App extends Component {
         let dCards = null;
         let dNextButton = null;
         let dStartButton = null;
+        let dPlayAgainButton = null;
 
         if(this.state.showDCards === true) {
             dCards = (
@@ -162,17 +160,25 @@ class App extends Component {
             );
             dNextButton = (
                 <Button onClick={this.toggleDNextCardsHandler}>Next</Button>
-            )
-        } else {
-            dStartButton = (
-                <Button onClick={this.toggleDCardsHandler}>Start Game</Button>
-            )
+            );
+        }
+        else {
+            if (this.state.dCards.length === 0) {
+                dPlayAgainButton = (
+                    <Button onClick={this.populateDCards}>Play Again</Button>
+                )
+            } else {
+                dStartButton = (
+                    <Button onClick={this.toggleDCardsHandler}>Start Game</Button>
+                );
+            }
         }
         return (
             <div className="App">
                 { dStartButton }
                 { dCards }
                 { dNextButton}
+                { dPlayAgainButton }
             </div>
         );
     }
